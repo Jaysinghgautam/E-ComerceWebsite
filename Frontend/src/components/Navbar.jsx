@@ -72,11 +72,34 @@ function Navbar() {
               />
               <p>Back</p>
             </div>
-            <NavLink onClick={() => setVisible(false)} to='/' className='py-2 pl-5 border' >HOme</NavLink>
-            <NavLink onClick={() => setVisible(false)} to='/collection'className='py-2 pl-5 border' >Collection</NavLink>
-            <NavLink onClick={() => setVisible(false)} to='/about' className='py-2 pl-5 border'>About</NavLink>
-            <NavLink onClick={() => setVisible(false)} to='/contact'className='py-2 pl-5 border'>Contact</NavLink>
-            
+            <NavLink
+              onClick={() => setVisible(false)}
+              to="/"
+              className="py-2 pl-5 border"
+            >
+              HOme
+            </NavLink>
+            <NavLink
+              onClick={() => setVisible(false)}
+              to="/collection"
+              className="py-2 pl-5 border"
+            >
+              Collection
+            </NavLink>
+            <NavLink
+              onClick={() => setVisible(false)}
+              to="/about"
+              className="py-2 pl-5 border"
+            >
+              About
+            </NavLink>
+            <NavLink
+              onClick={() => setVisible(false)}
+              to="/contact"
+              className="py-2 pl-5 border"
+            >
+              Contact
+            </NavLink>
           </div>
         </div>
       </div>
