@@ -12,10 +12,12 @@ import Orders from "./pages/Orders";
 import Navbar from "./components/Navbar";
 import Cart from "./pages/Cart";
 import Footer from "./components/Footer";
+import SearchBar from "./components/SearchBar";
 function App() {
   return (
     <div className="px-4 sm:px-[5vw] md:px-[7vm] lg:px-[9vm]">
       <Navbar />
+      <SearchBar/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/collection" element={<Collection />} />
