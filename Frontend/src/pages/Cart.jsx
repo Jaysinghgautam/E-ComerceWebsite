@@ -1,10 +1,12 @@
- import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import Title from "../components/Title";
 import binIcon from "../assets/bin_icon.png"; // Import your icon correctly
+import CartTotal from "../components/CartTotal";
 
 function Cart() {
-  const { products, currency, cartItems,updateQuantity } = useContext(ShopContext);
+  const { products, currency, cartItems, updateQuantity } =
+    useContext(ShopContext);
   const [cartData, setCartData] = useState([]);
 
   useEffect(() => {
@@ -32,7 +34,9 @@ function Cart() {
       </div>
       <div>
         {cartData.map((item, index) => {
-          const productData = products.find((product) => product._id === item._id);
+          const productData = products.find(
+            (product) => product._id === item._id,
+          );
 
           if (!productData) return null; // prevent crash if product not found
 
@@ -48,13 +52,17 @@ function Cart() {
                   alt={productData.name}
                 />
                 <div>
-                  <p className="text-sm sm:text-lg font-medium">{productData.name}</p>
+                  <p className="text-sm sm:text-lg font-medium">
+                    {productData.name}
+                  </p>
                   <div className="flex items-center gap-5 mt-2">
                     <p>
                       {currency}
                       {productData.price}
                     </p>
-                    <p className="px-2 sm:px-3 sm:py-1 border bg-slate-50">{item.size}</p>
+                    <p className="px-2 sm:px-3 sm:py-1 border bg-slate-50">
+                      {item.size}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -63,7 +71,10 @@ function Cart() {
                 type="number"
                 min={1}
                 value={item.quantity}
-                readOnly // or handle onChange if you want to update quantity
+                onChange={(e) => {
+                  const newValue = Math.max(1, Number(e.target.value)); // prevent below 1
+                  updateQuantity(item._id, item.size, newValue); // call your state update function
+                }}
               />
               <img
                 onClick={() => updateQuantity(item._id, item.size, 0)}
@@ -75,6 +86,15 @@ function Cart() {
           );
         })}
       </div>
+
+        <div className="flex justify-end my-20">
+          <div className=" w-fulll sm:w-[450px">
+            <CartTotal />
+            <div className="w-full text-end">
+              <button className="bg-black text-white text-sm my-8 px-8 py-3" >PROCEED TO CHECKOUT</button>
+            </div>
+          </div>
+        </div>
     </div>
   );
 }
