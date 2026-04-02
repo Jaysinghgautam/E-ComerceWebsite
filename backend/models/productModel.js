@@ -11,9 +11,9 @@ const productSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: true
+        
     },
-    image: {
+    images: {
         type:Array,
         required: true
     },
@@ -21,7 +21,7 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    subcategory: {
+    subCategory: {
         type: String,
         required: true
     },
