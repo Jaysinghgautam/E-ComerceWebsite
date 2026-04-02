@@ -24,43 +24,69 @@ const addProduct = async (req, res) => {
     );
 
     let imageUrls = await Promise.all(
-        images.map(async (item) => {
-            let result = await cloudinary.uploader.upload(item.path,{resource_type: 'image'});
-            return result.secure_url;
-        })
-    )
+      images.map(async (item) => {
+        let result = await cloudinary.uploader.upload(item.path, {
+          resource_type: "image",
+        });
+        return result.secure_url;
+      }),
+    );
 
     const productData = {
-        name,
-        description,
-        price: Number(price),
-        category,
-        subCategory,
-        sizes:JSON.parse(sizes),
-        bestseller: bestseller === "true" ? true : false,
-        images: imageUrls,
-        date: Date.now()
-
-    }
+      name,
+      description,
+      price: Number(price),
+      category,
+      subCategory,
+      sizes: JSON.parse(sizes),
+      bestseller: bestseller === "true" ? true : false,
+      images: imageUrls,
+      date: Date.now(),
+    };
 
     console.log(productData);
 
     const product = new productModel(productData);
     await product.save();
 
-     return res.json({ message: "Product added successfully" });
+    return res.json({ message: "Product added successfully" });
   } catch (error) {
-    res.status(500).json({ success:false, message:error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
 // function for get all products
-const listProducts = async (req, res) => {};
+const listProducts = async (req, res) => {
+  try {
+    const products = await productModel.find({});
+    res.json({ success: true, products });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
 
 // function for add product
-const removeProduct = async (req, res) => {};
+const removeProduct = async (req, res) => {
+  try {
+    await productModel.findByIdAndDelete(req.body.id);
+    res.json({ success: true, message: "Product removed successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
 
 // function for single product info
-const singleProduct = async (req, res) => {};
+const singleProduct = async (req, res) => {
+    try {
+        const {productId} = req.body;
+        const product = await productModel.findById(productId);
+        res.json({success:true, product});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
 
 export { addProduct, listProducts, removeProduct, singleProduct };
