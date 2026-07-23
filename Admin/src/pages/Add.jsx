@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { assets } from "../assets/assets";
 import { backendUrl } from "../App";
+import { toast } from "react-toastify";
 
 function Add({ token }) {
   const [image1, setImage1] = useState(false);
@@ -20,7 +21,7 @@ function Add({ token }) {
   const sizeOptions = ["S", "M", "L", "XL", "XXL"];
 
   const toggleSize = (size) => {
-    setSizes((prev) =>
+    setSizes((prev) => 
       prev.includes(size)
         ? prev.filter((item) => item !== size)
         : [...prev, size],
@@ -58,29 +59,28 @@ function Add({ token }) {
       );
 
       console.log(response.data);
+ if (response.data.success) {
+  toast.success(response.data.message);
 
-      if (response.data.success) {
-        alert("Product Added Successfully");
+  setName("");
+  setDescription("");
+  setPrice("");
+  setCategory("Men");
+  setSubCategory("Topwear");
+  setBestseller(false);
+  setSizes([]);
 
-        setName("");
-        setDescription("");
-        setPrice("");
-        setCategory("Men");
-        setSubCategory("Topwear");
-        setBestseller(false);
-        setSizes([]);
-
-        setImage1(false);
-        setImage2(false);
-        setImage3(false);
-        setImage4(false);
-      } else {
-        alert(response.data.message);
-      }
-    } catch (error) {
-      console.log(error);
-      alert(error.message);
-    }
+  setImage1(false);
+  setImage2(false);
+  setImage3(false);
+  setImage4(false);
+} else {
+  toast.error(response.data.message);
+}
+} catch (error) {
+  console.log(error);
+  toast.error(error.response?.data?.message || error.message);
+}
   };
 
   return (
