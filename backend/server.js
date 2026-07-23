@@ -6,6 +6,12 @@ import { connect } from "mongoose";
 import connectCloudinary from "./config/cloudinary.js";
 import userRouter from "./routes/userRoute.js";
 import router from "./routes/productRoute.js";
+import dns from 'dns'
+
+dns.setServers([
+  '1.1.1.1','8.8.8.1'
+])
+
 // app config
 
 const app = express();
