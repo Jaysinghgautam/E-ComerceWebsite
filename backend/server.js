@@ -7,6 +7,7 @@ import connectCloudinary from "./config/cloudinary.js";
 import userRouter from "./routes/userRoute.js";
 import router from "./routes/productRoute.js";
 import dns from 'dns'
+import cartRouter from "./routes/cartRout.js";
 
 dns.setServers([
   '1.1.1.1','8.8.8.1'
@@ -26,6 +27,7 @@ app.use(cors());
 
 app.use("/api/user", userRouter);
 app.use("/api/product", router);
+app.use("/api/cart",cartRouter)
 
 app.get("/", (req, res) => {
   res.send("Hello World");

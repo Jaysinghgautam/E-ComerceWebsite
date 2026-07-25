@@ -1,4 +1,4 @@
- import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import assets from "../assets/assets";
@@ -52,9 +52,8 @@ function Product() {
               />
             ))}
           </div>
-
           <div className="w-full sm:w-[80%]">
-            <img src={image} className="w-full h-auto" alt="" />
+            {image && <img src={image} className="w-full h-auto" alt="" />}
           </div>
         </div>
 
