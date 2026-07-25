@@ -1,32 +1,156 @@
-import React, { useState } from 'react'
+ 
+import React, { useContext, useEffect, useState } from "react";
+import { ShopContext } from "../context/ShopContext";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 function Login() {
+  // Initial State
+  const [currentState, setCurrentState] = useState("Login");
 
-  const [currentState, setCurrentState] =  useState('Sign Up');
+  const { token, setToken, navigate, backendUrl } =
+    useContext(ShopContext);
 
-  const onsubmithandler =  async (e) => {
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
-  }
+
+    try {
+      // ✅ Sign Up
+      if (currentState === "Sign Up") {
+        const response = await axios.post(
+          backendUrl + "/api/user/register",
+          {
+            name,
+            email,
+            password,
+          }
+        );
+
+        console.log(response.data);
+
+        if (response.data.success) {
+          setToken(response.data.token);
+          localStorage.setItem("token", response.data.token);
+          
+        } else {
+          console.log(error)
+          toast.error(response.data.message)
+        }
+      }
+
+      // ✅ Login
+      else {
+        const response = await axios.post(
+          backendUrl + "/api/user/login",
+          {
+            email,
+            password,
+          }
+        );
+
+        console.log(response.data);
+
+        if (response.data.success) {
+          setToken(response.data.token);
+          localStorage.setItem("token", response.data.token);
+          
+        } else {
+          toast.success(response.message)
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message)
+    }
+  };
+
+  useEffect(()=> {
+    if(token) {
+      navigate('/')
+    }
+  },[token])
 
   return (
-   <form onSubmit={onsubmithandler} className='flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 gap-4 text-gray-800  ' action="">
-<div className="inline-flex items-center gap-2 mb-2 mt-10">
-  <p className='prata-regular text-3xl' > {currentState} </p>
-  <hr className='border-none h-[1.5px]w-8 bg-gray-800 '/>
-</div>
-   {currentState === 'Login' ? '' : <input className='w-full px-3 py-2 border border-gray-800' type="text" placeholder='Username' required />}
-   <input className='w-full px-3 py-2 border border-gray-800' type="email" placeholder='gmail' required />
-   <input className='w-full px-3 py-2 border border-gray-800' type="password" placeholder='Password' required />  
-   <div className="w-full flex justify-between text-sm mt-[-80]"> 
-    <p className='curosr-pointer' >Forgot your password?</p>
-    {
-      currentState === 'Login' ? <p className='cursor-pointer' onClick={()=>setCurrentState('Sign Up')} >Create account</p>
-      : <p className='cursor-pointer' onClick={()=>setCurrentState('Login')}  >Login Here</p>
-    }
-   </div>
-   <button>{currentState === 'Login' ? 'Sign In' : 'Sign Up'} </button>
-   </form>
-  )
+    <form
+      onSubmit={onSubmitHandler}
+      className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 gap-4 text-gray-800"
+    >
+      <div className="inline-flex items-center gap-2 mb-2 mt-10">
+        <p className="prata-regular text-3xl">{currentState}</p>
+        <hr className="border-none h-[1.5px] w-8 bg-gray-800" />
+      </div>
+
+      {/* Name */}
+      {currentState === "Login" ? null : (
+        <input
+          onChange={(e) => setName(e.target.value)}
+          value={name}
+          type="text"
+          placeholder="Name"
+          className="w-full px-3 py-2 border border-gray-800"
+          required
+        />
+      )}
+
+      {/* Email */}
+      <input
+        onChange={(e) => setEmail(e.target.value)}
+        value={email}
+        name="email"
+        type="email"
+        placeholder="Enter your email"
+        autoComplete="email"
+        className="w-full px-3 py-2 border border-gray-800"
+        required
+      />
+
+      {/* Password */}
+      <input
+        onChange={(e) => setPassword(e.target.value)}
+        value={password}
+        type="password"
+        placeholder="Password"
+        autoComplete={
+          currentState === "Login"
+            ? "current-password"
+            : "new-password"
+        }
+        className="w-full px-3 py-2 border border-gray-800"
+        required
+      />
+
+      <div className="w-full flex justify-between text-sm">
+        <p className="cursor-pointer">Forgot Password?</p>
+
+        {currentState === "Login" ? (
+          <p
+            className="cursor-pointer"
+            onClick={() => setCurrentState("Sign Up")}
+          >
+            Create Account
+          </p>
+        ) : (
+          <p
+            className="cursor-pointer"
+            onClick={() => setCurrentState("Login")}
+          >
+            Login Here
+          </p>
+        )}
+      </div>
+
+      <button
+        type="submit"
+        className="bg-black text-white w-full py-3 mt-2"
+      >
+        {currentState === "Login" ? "Sign In" : "Sign Up"}
+      </button>
+    </form>
+  );
 }
 
-export default Login
+export default Login;
