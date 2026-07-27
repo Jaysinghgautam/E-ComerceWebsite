@@ -74,7 +74,7 @@ function List({ token }) {
             className="grid grid-cols-[1fr_3fr_1fr] md:grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center gap-2 py-2 px-2 border text-sm"
           >
             <img
-              src={item.image?.[0] || ""}
+              src={item.images?.[0] || ""}
               alt={item.name}
               className="w-14 h-14 object-cover border rounded"
             />
