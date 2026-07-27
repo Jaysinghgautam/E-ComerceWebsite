@@ -28,22 +28,41 @@ const placeOrder = async (req, res) => {
 
 // placing method using stripe method
 
-const placeOrderstripe = async (req, res) => {};
+const placeOrderstripe = async (req, res) => {
+
+};
 
 // placing order using razorpay method
 
-const placeOrderRazorpay = async (req, res) => {};
+const placeOrderRazorpay = async (req, res) => {
+
+};
 
 // all orders data for admin panel
 
-const allOrders = async (req, res) => {};
+const allOrders = async (req, res) => {
+
+};
 
 // user order data for frontend
 
-const userOrders = async (req, res) => {};
+const userOrders = async (req, res) => {
+try {
+  const {userId} = req.body 
+  const orders = await orderModel.find({userId})
+  res.json({success:true,orders})
+} catch (error) {
+  console.log(error)
+  res.json({success:false,message:error.message})
+}
+    
+    
+};
 
 // update order status from admin panel
-const updateStatus = async (req, res) => {};
+const updateStatus = async (req, res) => {
+
+};
 
 export {
   placeOrder,
