@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+ import React, { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import assets from "../assets/assets";
@@ -21,9 +21,9 @@ function Product() {
     if (product) {
       setProductData(product);
 
-      // ✅ Error Fix: Check image exists before accessing image[0]
-      if (product.image && product.image.length > 0) {
-        setImage(product.image[0]);
+      // ✅ Fixed: image -> images
+      if (product.images && product.images.length > 0) {
+        setImage(product.images[0]);
       } else {
         setImage("");
       }
@@ -41,8 +41,8 @@ function Product() {
         {/* Product Images */}
         <div className="flex-1 flex flex-col-reverse gap-3 sm:flex-row">
           <div className="flex sm:flex-col overflow-x-auto sm:overflow-y-scroll justify-between sm:justify-normal sm:w-[18.7%] w-full">
-            {/* ✅ Error Fix: Safe map */}
-            {productData?.image?.map((item, index) => (
+            {/* ✅ Fixed: image -> images */}
+            {productData?.images?.map((item, index) => (
               <img
                 key={index}
                 onClick={() => setImage(item)}
@@ -52,6 +52,7 @@ function Product() {
               />
             ))}
           </div>
+
           <div className="w-full sm:w-[80%]">
             {image && <img src={image} className="w-full h-auto" alt="" />}
           </div>
@@ -83,7 +84,6 @@ function Product() {
             <p>Select Size</p>
 
             <div className="flex gap-2">
-              {/* ✅ Error Fix: Safe map */}
               {productData?.sizes?.map((item, index) => (
                 <button
                   key={index}

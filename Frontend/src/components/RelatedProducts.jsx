@@ -35,7 +35,7 @@ function RelatedProducts({ category, subcategory }) {
               id={item._id}
               name={item.name}
               price={item.price}
-              image={item.image}
+              image={item.images}
             />
           ))
         ) : (
