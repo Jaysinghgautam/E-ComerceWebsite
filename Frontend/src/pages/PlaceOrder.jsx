@@ -7,7 +7,6 @@ import { ShopContext } from "../context/ShopContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-
 function PlaceOrder() {
   const [method, setMethod] = useState("cod");
   const {
@@ -70,21 +69,45 @@ function PlaceOrder() {
             orderData,
             { headers: { token } },
           );
-          console.log(response.data.message)
+          console.log(response.data.message);
           if (response.data.success) {
             setCartItems({});
             navigate("/orders");
           } else {
-            toast.error(response.data.message)
+            toast.error(response.data.message);
           }
           break;
+case "stripe":
+  try {
+    const responseStripe = await axios.post(
+      backendUrl + "/api/order/stripe",
+      orderData,
+      {
+        headers: { token },
+      }
+    );
+
+    console.log(responseStripe.data);
+
+    if (responseStripe.data.success) {
+      const { session_url } = responseStripe.data;
+      window.location.replace(session_url);
+    } else {
+      toast.error(responseStripe.data.message);
+    }
+  } catch (error) {
+    console.log(error);
+    toast.error(error.response?.data?.message || error.message);
+  }
+
+  break;
 
         default:
           break;
       }
     } catch (error) {
-      console.log(error)
-      toast.error(error.message)
+      console.log(error);
+      toast.error(error.message);
     }
   };
 
@@ -232,7 +255,6 @@ function PlaceOrder() {
           <div className="w-full text-end mt-8 ">
             <button
               type="submit"
-              // onClick={() => navigate("/orders")}
               className="bg-black text-white px-16 py-3 text-sm cursor-pointer "
             >
               PLACE ORDER
