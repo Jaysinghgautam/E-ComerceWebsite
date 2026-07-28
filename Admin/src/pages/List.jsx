@@ -15,7 +15,7 @@ function List({ token }) {
       });
 
       if (response.data.success) {
-        setList(response.data.products);
+        setList(response.data.products.reverse());
       } else {
         toast.error(response.data.message);
       }
