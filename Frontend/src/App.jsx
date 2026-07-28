@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Product from "./pages/Product";
+import Verify from './pages/Verify'
 
 import Login from "./pages/Login";
 import PlaceOrder from "./pages/PlaceOrder";
@@ -34,6 +35,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/place-order" element={<PlaceOrder />} />
         <Route path="/orders" element={<Orders />} />
+        <Route path="/verify" element= {<Verify/>} />
       </Routes>
       <Footer/>
     </div>
