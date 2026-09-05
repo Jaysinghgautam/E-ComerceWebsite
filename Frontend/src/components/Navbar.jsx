@@ -16,7 +16,7 @@ function Navbar() {
     <div className="flex items-center justify-between py-5 font-medium">
       <Link to="/">
         {" "}
-        <img src={assets.logo} alt="" className="w-36" />
+        <img src="https://res.cloudinary.com/drc0gwhz9/image/upload/v1788608401/ChatGPT_Image_Sep_5_2026_05_09_06_PM_ubvmsy.png" alt="" className="w-36" />
       </Link>
       <ul className="sm:flex gap-5 text-sm text-gray-700 hidden">
         <NavLink to="/" className="flex flex-col items-center gap-1">

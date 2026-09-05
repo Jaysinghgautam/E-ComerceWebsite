@@ -28,7 +28,7 @@ function Hero() {
 
       {/* Hero Right side */}
       <div className="w-full sm:w-1/2">
-        <img className="w-full" src={assets.hero_img} alt="Hero" />
+        <img className="w-full" src="https://res.cloudinary.com/drc0gwhz9/image/upload/v1788608106/pexels-karola-g-6954962_tg3agt.jpg" alt="Hero" />
       </div>
     </div>
   )
